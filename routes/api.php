@@ -113,9 +113,7 @@ Route::group(['prefix' => 'v1'], function () {
 Route::group(['middleware' => 'jwt.auth', 'prefix' => 'v1'], function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::prefix('dashboard')->group(function () {
-            Route::group(['middleware' => 'admin'], function () {
                 Route::get('top-product', 'topProductByMonth');
-            });
         });
     });
 });
