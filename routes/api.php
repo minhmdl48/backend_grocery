@@ -117,3 +117,12 @@ Route::group(['middleware' => 'jwt.auth', 'prefix' => 'v1'], function () {
         });
     });
 });
+
+Route::group(['middleware' => 'jwt.auth', 'prefix' => 'v1'], function () {
+    Route::controller(\App\Http\Controllers\Api\MessageController::class)->group(function () {
+        Route::prefix('chat')->group(function () {
+            Route::get('message/{id}', 'getMessage');
+            Route::post('message', 'createMessage');
+        });
+    });
+});
