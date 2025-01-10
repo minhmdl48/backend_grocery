@@ -44,7 +44,16 @@ class AuthController extends Controller
             $validator = Validator::make($request->all(), [
                 'user_name' => 'required|string|between:2,100',
                 'email' => 'required|string|email|max:100|unique:users',
-                'password' => 'required|string|min:6',
+                'password' => [
+                    'required',
+                    'string',
+                    \Illuminate\Validation\Rules\Password::min(8)
+                        ->mixedCase()  // Chứa cả chữ hoa và chữ thường
+                        ->letters()    // Phải có ký tự chữ cái
+                        ->numbers()    // Phải có số
+                        ->symbols()    // Phải có ký tự đặc biệt
+                        ->uncompromised(), // Không nằm trong danh sách mật khẩu bị rò rỉ
+                ],
                 'phone' => 'required|regex:/^0[0-9]{9,10}$/',
             ]);
 
